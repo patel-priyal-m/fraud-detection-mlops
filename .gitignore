@@ -1,0 +1,55 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+
+# =========================
+# MLflow artifacts
+# =========================
+mlruns/
+mlartifacts/
+*.pkl
+
+# =========================
+# Data files (too large for Git)
+# =========================
+*.csv
+data/
+
+# =========================
+# Logs (generated at runtime)
+# =========================
+logs/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Docker
+# =========================
+.dockerignore
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment variables
+# =========================
+.env
+*.env
