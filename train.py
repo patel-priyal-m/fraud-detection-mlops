@@ -35,10 +35,10 @@ def load_data(filepath: str) -> pd.DataFrame:
     - Amount: Transaction amount
     - Class: 0 = Normal, 1 = Fraud
     """
-    print(f"📂 Loading data from {filepath}...")
+    print(f"[INFO] Loading data from {filepath}...")
     df = pd.read_csv(filepath)
-    print(f"✅ Loaded {len(df):,} transactions")
-    print(f"   - Fraud cases: {df['Class'].sum():,} ({df['Class'].mean()*100:.2f}%)")
+    print(f"[INFO] Loaded {len(df):,} transactions")
+    print(f"       - Fraud cases: {df['Class'].sum():,} ({df['Class'].mean()*100:.2f}%)")
     print(f"   - Normal cases: {(df['Class']==0).sum():,}")
     return df
 
@@ -53,7 +53,7 @@ def preprocess_data(df: pd.DataFrame):
     3. Stratified split - maintains fraud ratio in train/test sets
        (Critical for imbalanced datasets!)
     """
-    print("\n🔧 Preprocessing data...")
+    print("\n[INFO] Preprocessing data...")
     
     # Scale the Amount feature
     scaler = StandardScaler()
@@ -96,7 +96,7 @@ def train_model(X_train, y_train, n_estimators: int = 100):
     class_weight='balanced' automatically adjusts weights
     inversely proportional to class frequencies.
     """
-    print(f"\n🤖 Training Random Forest with {n_estimators} estimators...")
+    print(f"\n[INFO] Training Random Forest with {n_estimators} estimators...")
     
     model = RandomForestClassifier(
         n_estimators=n_estimators,
@@ -108,7 +108,7 @@ def train_model(X_train, y_train, n_estimators: int = 100):
     )
     
     model.fit(X_train, y_train)
-    print("✅ Model training complete!")
+    print("[INFO] Model training complete!")
     
     return model
 
@@ -124,7 +124,7 @@ def evaluate_model(model, X_test, y_test):
     
     High recall is crucial - we don't want to miss frauds!
     """
-    print("\n📊 Evaluating model...")
+    print("\n[INFO] Evaluating model...")
     
     y_pred = model.predict(X_test)
     y_prob = model.predict_proba(X_test)[:, 1]  # Probability of fraud
@@ -170,7 +170,7 @@ def main():
     mlflow.set_experiment(EXPERIMENT_NAME)
     
     print("=" * 60)
-    print("🚀 FRAUD DETECTION MODEL TRAINING")
+    print("FRAUD DETECTION MODEL TRAINING")
     print("=" * 60)
     
     # Load and preprocess data
@@ -181,7 +181,7 @@ def main():
     # Everything inside this block is tracked
     with mlflow.start_run(run_name="random-forest-baseline"):
         
-        print("\n📝 MLflow tracking started...")
+        print("\n[INFO] MLflow tracking started...")
         
         # Log parameters (inputs to the model)
         mlflow.log_param("n_estimators", N_ESTIMATORS)
@@ -202,7 +202,7 @@ def main():
         
         # Log the model artifact
         # This saves the model in MLflow format for easy loading later
-        print("\n💾 Saving model to MLflow...")
+        print("\n[INFO] Saving model to MLflow...")
         mlflow.sklearn.log_model(
             model, 
             artifact_path="model",
@@ -211,13 +211,13 @@ def main():
         
         # Get the run ID for reference
         run_id = mlflow.active_run().info.run_id
-        print(f"\n✅ MLflow Run ID: {run_id}")
-        print(f"   Model saved at: mlruns/")
+        print(f"\n[INFO] MLflow Run ID: {run_id}")
+        print(f"       Model saved at: mlruns/")
         
     print("\n" + "=" * 60)
-    print("🎉 TRAINING COMPLETE!")
+    print("TRAINING COMPLETE!")
     print("=" * 60)
-    print("\n📌 Next steps:")
+    print("\nNext steps:")
     print("   1. Run 'mlflow ui' to view experiment dashboard")
     print("   2. Run 'python main.py' to start the API server")
     print("   3. The model is ready for serving!")
