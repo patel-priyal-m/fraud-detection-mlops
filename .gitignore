@@ -23,6 +23,7 @@ mlartifacts/
 # =========================
 *.csv
 data/
+!data/.gitkeep
 
 # =========================
 # Logs (generated at runtime)
