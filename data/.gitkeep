@@ -1,0 +1,5 @@
+# This file ensures the data/ directory is tracked by Git
+# while the actual data files (*.csv) are ignored.
+# 
+# To use this project, download creditcard.csv from:
+# https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud

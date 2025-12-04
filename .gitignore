@@ -22,8 +22,8 @@ mlartifacts/
 # Data files (too large for Git)
 # =========================
 *.csv
-data/
-!data/.gitkeep
+data/*.csv
+data/*.zip
 
 # =========================
 # Logs (generated at runtime)
